@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Blackjack</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="page-header">
+                <h1>
+                    Simple BlackJack score counter <small>enter your cards below</small>
+                </h1>
+            </div>
+            <div class="row col-lg-12">
+                <div class="alert alert-info" role="alert">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4>Tips for entering your cards</h4>
+                    <p>
+                        Please enter your card as digit from 2 to 10 or letter for A - ace, K - king,
+                        Q - queen, J - Jack. Then add a color of card by entering S - spade, C - club,
+                        D - diamond, H - heart. Example: 8D, KC etc. Your score will automatically
+                        show below. <strong>It's case sensitive!</strong>
+                    </p>
+                </div>
+                <form class="form-horizontal" role="form">
+                    <div class="col-lg-4">
+                        <div class="form-group form-group-lg">
+                            <label class="col-sm-5 control-label" for="formGroupInputLarge">1st card</label>
+                            <div class="col-sm-7">
+                                <input class="form-control" type="text" placeholder="1st card" name="card_1" maxlength="3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group form-group-lg">
+                            <label class="col-sm-5 control-label" for="formGroupInputLarge">2nd card</label>
+                            <div class="col-sm-7">
+                                <input class="form-control" type="text" placeholder="2nd card" name="card_2" maxlength="3">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <h3>
+                        Your score is: <span id="cards-sum" class="label label-default"><strong>0</strong></span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        <script src="../bootstrap/js/jquery.min.js"></script>
+        <script src="../bootstrap/js/bootstrap.min.js"></script>
+        <script src="../js/cards-counter.js"></script>
+    </body>
+</html>
