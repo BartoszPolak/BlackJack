@@ -33,8 +33,8 @@ CardsCounter.prototype = {
      */
     parseCardValue : function(rawValue)
     {
-        var cardPattern = new RegExp('^([2-9]?|10|[AKQJ]{1})([SCDH]{1})$', '');
-        var rawCard = cardPattern.exec(rawValue);
+        var CardPattern = new RegExp('^([2-9]?|10|[AKQJ]{1})([SCDH]{1})$', '');
+        var rawCard = CardPattern.exec(rawValue);
         
         if (rawCard !== null) {
             var value = 0;
@@ -51,16 +51,59 @@ CardsCounter.prototype = {
     },
     
     /**
+     * Paints input element based on paintType param.
+     * @param {Object} Element jQuery input element object
+     * @param {String} paintType
+     */
+    paintInputElement : function(Element, paintType)
+    {
+        switch (paintType) {
+            case 'success':
+                Element
+                    .parents('div.form-group')
+                    .removeClass('has-error')
+                    .addClass('has-' + paintType);
+                break;
+            case 'error':
+                Element
+                    .parents('div.form-group')
+                    .addClass('has-error');
+                break;
+            case 'default':
+            default:
+                Element
+                    .parents('div.form-group')
+                    .removeClass('has-error');
+                break;
+        }
+    },
+    
+    /**
      * Gets value of card from input searching by name attribute.
      * @param {string} inputName Name of DOM element where to get card value from.
-     * @throws When could not find the DOM element with provided name.
+     * 
+     * @see CardsCounter.prototype.parseCardValue()
+     * @throws When could not find the DOM element with provided name or can't get card value.
+     * 
      * @returns {integer}
      */
     getCardValueFromInput : function(inputName)
     {
-        var inputValue = $('[name="' + inputName + '"]');
-        if (inputValue.length > 0) {
-            return CardsCounter.prototype.parseCardValue(inputValue.val());
+        var CardValueInput = $('[name="' + inputName + '"]');
+        if (CardValueInput.length > 0) {
+            try {
+                var cardValue = CardsCounter.prototype.parseCardValue(CardValueInput.val());
+                CardsCounter.prototype.paintInputElement(CardValueInput, 'success');
+                return cardValue;
+            } catch (error) {
+                if (CardValueInput.val() !== '') {
+                    CardsCounter.prototype.paintInputElement(CardValueInput, 'error');
+                } else {
+                    CardsCounter.prototype.paintInputElement(CardValueInput, 'default');
+                }
+                
+                throw error.message;
+            }
         } else {
             throw 'I couldn\'t find the card!';
         }
@@ -92,7 +135,6 @@ CardsCounter.prototype = {
     
     /**
      * Updates score by calculationg provided card value
-     * @returns void
      */
     updateValue : function()
     {
@@ -105,6 +147,7 @@ CardsCounter.prototype = {
             }
             
             if (i >= 1) {
+                // only 2 card to count value from
                 return false;
             }
         });
